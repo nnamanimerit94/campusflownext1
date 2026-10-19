@@ -1,9 +1,26 @@
 # CampusFlow Next
 
-A planned Python campus helpdesk ticket management CLI.
+A Python campus helpdesk CLI in development. Python 3.11+; standard library only.
 
-**Status:** planning only. No application, tests or CI are implemented. Installation and execution instructions will be added when verified code exists.
+The engineering plan was approved and merged in PR #2. This foundation branch adds the package, test runner and CI; review/merge is pending. Ticket creation, lifecycle, notes, persistence, search, reports, CLI and Understanding Check remain unimplemented.
 
-See [ENGINEERING_PLAN.md](ENGINEERING_PLAN.md) for proposed requirements, interfaces, ownership and delivery gates, and [AGENTS.md](AGENTS.md) for collaboration rules. Planning is tracked in [issue #1](https://github.com/nnamanimerit94/campusflownext1/issues/1).
+## Run the tests
+From the repository root (no dependency installation required):
 
-Proposed features: validated ticket creation, assignment/lifecycle, notes, JSON persistence, search/filters, statistics, interactive CLI and an Engineering Understanding Check. These are pending agreement and implementation.
+```sh
+python scripts/run_tests.py
+```
+
+On Windows use `py` instead of `python` if needed. The runner discovers `tests/test_*.py`, rejects zero discovered tests and exits nonzero for failures/import errors. For direct discovery: `python -m unittest discover -s tests -v` (without the empty-suite guard).
+
+GitHub Actions runs the guarded command for every pull request and pushes to main on Python 3.11 and 3.14. No application run command exists yet.
+
+## Structure
+- `campusflow/`: application package; domain modules arrive in later reviewed PRs.
+- `tests/`: unittest suite.
+- `scripts/run_tests.py`: local/CI runner.
+- `.github/workflows/tests.yml`: CI matrix.
+- `docs/PROGRESS.md`: delivery and verification evidence.
+
+See [ENGINEERING_PLAN.md](ENGINEERING_PLAN.md) for approved contracts and ownership, [AGENTS.md](AGENTS.md) for collaboration rules, and [foundation issue #3](https://github.com/nnamanimerit94/campusflownext1/issues/3).
+

@@ -1,6 +1,6 @@
 # CampusFlow Next engineering plan
 
-Status: PROPOSED. Engineer B must formally review and merge the planning PR before dependent implementation. All application capabilities below are pending.
+Status: APPROVED in PR #2 (eeyung1 review 5577732703), merged as 064d5e0029cc56ac45c78fed3c8892ae033e9543. Application capabilities remain pending; foundation implementation is under review in the issue #3 branch.
 
 ## Objective and boundaries
 A local Python campus helpdesk CLI for recording, following up and reporting student support tickets. Proposed MVP: one operator/process at a time, Python 3.11+, standard library only, JSON storage. No web UI, AI service, authentication, concurrent writers, bank integration or actual payment processing. Use synthetic student data in this public repository.
@@ -31,7 +31,7 @@ Use campusflow/ package, tests/, docs/, main.py entry point and .github/workflow
 Engineer B accepted this ownership split in review 5577653103; Engineer A accepts it as well.
 
 ## Version and compatibility decision
-CampusFlow Next is an intentional new product version, not a drop-in continuation of the previous CampusFlow repository. Retain the explicitly listed student_id/student_name fields, categories, UUID4 ticket/note IDs and versioned JSON envelope. No legacy ID aliases, implicit category remapping or automatic old-file migration. Legacy files failing this schema raise StorageError and remain untouched. Any future import needs its own agreed contract and reviewed PR. These choices supersede accidental reliance on the old contract, subject to B's approval of this revision.
+CampusFlow Next is an intentional new product version, not a drop-in continuation of the previous CampusFlow repository. Retain the explicitly listed student_id/student_name fields, categories, UUID4 ticket/note IDs and versioned JSON envelope. No legacy ID aliases, implicit category remapping or automatic old-file migration. Legacy files failing this schema raise StorageError and remain untouched. Any future import needs its own agreed contract and reviewed PR. These choices supersede accidental reliance on the old contract, approved by B in review 5577732703.
 
 ## Proposed shared data contract
 TicketStore = dict[str, Ticket], keyed by ticket ID. Ticket and Note are TypedDict-shaped JSON-compatible dictionaries. No global mutable store or import-time I/O.
@@ -51,7 +51,7 @@ Only documented keys accepted in persisted records. Require exactly the document
 IDs must be strings in canonical UUID4 format. Invalid format raises ValidationError; valid absent ID raises TicketNotFoundError. Validate entire inputs before mutation; rejected operations leave store unchanged. Public read APIs return deep copies; report/search functions never mutate inputs. Mutation APIs update the supplied in-memory store and return deep copies; persistence is explicitly invoked by the CLI.
 
 ## Proposed public interfaces
-All signatures below are contracts for review, not existing functions.
+All signatures below are approved contracts, not existing functions.
 - models.validate_ticket(ticket: object) -> Ticket; models.validate_store(value: object) -> TicketStore
 - tickets.create_ticket(store: TicketStore, *, student_id: str, student_name: str, title: str, description: str, category: str, urgency: str, affected_users: int) -> Ticket
 - tickets.get_ticket(store: TicketStore, ticket_id: str) -> Ticket
@@ -71,7 +71,7 @@ Errors in models.py: ValidationError(ValueError), TicketNotFoundError(LookupErro
 
 ## Behavior for shared review
 ### Priority decision
-Restore affected-user impact and critical escalation. The review does not supply the legacy threshold; the following is an explicit Next policy proposed for B's confirmation, not a claim to reproduce unseen legacy code.
+Restore affected-user impact and critical escalation. The review does not supply the legacy threshold; the following is the explicit Next policy approved by B in review 5577732703, not a claim to reproduce unseen legacy code.
 
 | Urgency | affected_users 1–9 | affected_users >= 10 |
 | --- | --- | --- |
@@ -114,9 +114,13 @@ User-confirmed identities: Engineer A = nnamanimerit94; Engineer B = eeyung1. Re
 Branch protection is absent; workflow compliance is procedural until a maintainer chooses repository protections. No settings changes are proposed in this PR.
 
 ## Verification and audit
-Planned test command: python -m unittest discover -s tests -v (not available yet). Use temporary directories and synthetic records. Include invalid types, whitespace, malformed IDs, missing tickets, rejected-operation immutability, duplicate persisted IDs, unsupported schemas, interrupted writes and combined filters.
+Foundation test command: python scripts/run_tests.py (includes a zero-test guard). Plain discovery is also available: python -m unittest discover -s tests -v. Use temporary directories and synthetic records. Include invalid types, whitespace, malformed IDs, missing tickets, rejected-operation immutability, duplicate persisted IDs, unsupported schemas, interrupted writes and combined filters.
 Final evidence must link actual CI runs and reviewed PRs, record realistic CLI save/reload scenarios, and distinguish checks run from checks merely planned.
 After scope is complete, practice audit questions one at a time with human Engineer A; score /10, explain gaps and revisit weak areas. Do not claim completed audit preparation now.
 
 ## Planning review progress
 2026-10-19: B requested changes in review 5577653103. A revised impact-based priority, closed-ticket note policy, full lifecycle matrix, explicit Next schema/UUID compatibility and reviewer identities. Ownership is mutually accepted; revised product contracts await B's fresh formal approval and merge of PR #2. No feature implementation or tests/CI exist yet. This documentation-only planning PR has no executable CI prerequisite; record CI as unavailable, not passed. Subsequent implementation PRs require their applicable CI checks.
+
+## Current delivery progress
+Planning gate complete: PR #2 approved by eeyung1 in review 5577732703 and merged. Foundation issue #3: package, guarded unittest runner, five foundation tests and Python 3.11/3.14 PR/main CI implemented on its feature branch; local Python 3.12.14 tests pass. CI/review/merge pending; foundation is not yet delivered on main. See docs/PROGRESS.md. All domain features remain pending.
+
