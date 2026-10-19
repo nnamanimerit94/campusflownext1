@@ -62,6 +62,8 @@ class UnderstandingTests(unittest.TestCase):
             run_check(lambda _: None, lambda _: None)
 
     def test_default_functions_work_with_patched_io(self):
-        with patch("builtins.input", return_value="quit"), patch("builtins.print") as printer:
-            run_check()
+        with patch("builtins.input", return_value="quit") as mocked_input, patch("builtins.print") as printer:
+            # Default arguments were bound at function definition time.
+            # Inject the patched callables explicitly to avoid real stdin/stdout.
+            run_check(input_fn=mocked_input, output_fn=printer)
         self.assertTrue(printer.called)
