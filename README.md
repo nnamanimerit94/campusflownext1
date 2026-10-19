@@ -50,3 +50,6 @@ Use `assign_ticket(store, ticket_id, assignee)`, `transition_ticket(store, ticke
 
 ## Engineering Understanding Check (PR under review)
 Run `python -c "from campusflow.understanding import run_check; run_check()"` for a local, five-question, one-at-a-time practice session. Each response is followed by deterministic reference guidance; no AI grading or numerical score is claimed. Type `quit` or `exit`, or send EOF, to stop. No ticket data is read or written. Interactive CLI integration is a separate pending gate.
+
+## Interactive CLI (Engineer B review pending)
+Run `python main.py` from the repository root. The single-operator menu supports create, assign, notes, start/resolve/close/reopen, combined search, current-state statistics, reload and the deterministic Understanding Check. Tickets persist in `tickets.json` in the working directory. Each mutation is staged on a copy and published only after `save_tickets` succeeds; storage/validation errors preserve the active store. Invalid existing files cause a safe nonzero exit rather than being reset. The parent directory must exist. This CLI PR awaits independent Engineer A approval and merge.
