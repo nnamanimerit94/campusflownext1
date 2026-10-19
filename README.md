@@ -41,3 +41,6 @@ Save validates the entire store, writes a sibling temporary file, flushes/fsyncs
 
 ## Ticket assignment and lifecycle (Engineer B PR)
 Use `assign_ticket(store, ticket_id, assignee)`, `transition_ticket(store, ticket_id, new_status)` and `reopen_ticket(store, ticket_id)` from `campusflow.workflow`. Assign or reassign only active tickets; transition open→in_progress (requires assignee), in_progress→resolved, resolved→closed. Reopen resolved/closed through the explicit API. Invalid transitions leave the store untouched. Successful operations preserve history, use nondecreasing UTC timestamps and return independent copies. This module awaits independent Engineer A review and merge.
+
+## Search and combined filters (Engineer B PR)
+`campusflow.search.search_tickets(store, *, query='', status=None, priority=None, category=None, assigned_to=None)` performs stripped casefold substring search across ticket ID, student ID/name, title, description and note bodies. Optional enum and assignee filters combine with AND; assignee comparison is case-insensitive exact match. Results are deep-copy snapshots ordered by UTC creation time then ID. Invalid filters or stores raise ValidationError without mutation. Search is awaiting independent Engineer A review and merge; reports/CLI are not part of this PR.
