@@ -38,3 +38,6 @@ Use `storage.load_tickets(Path("tickets.json"))` and `storage.save_tickets(Path(
 
 Save validates the entire store, writes a sibling temporary file, flushes/fsyncs and closes it, then calls os.replace. Failures before replacement preserve the old destination and attempt temporary-file cleanup; cleanup failures are included on the original exception. Replacement may change file permissions to those of the temporary file. No concurrent writers, file locking, parent creation, legacy migration or guaranteed hardware/power-loss recovery. Callers must report failures rather than treating them as an empty database.
 
+
+## Ticket assignment and lifecycle (Engineer B PR)
+Use `assign_ticket(store, ticket_id, assignee)`, `transition_ticket(store, ticket_id, new_status)` and `reopen_ticket(store, ticket_id)` from `campusflow.workflow`. Assign or reassign only active tickets; transition open→in_progress (requires assignee), in_progress→resolved, resolved→closed. Reopen resolved/closed through the explicit API. Invalid transitions leave the store untouched. Successful operations preserve history, use nondecreasing UTC timestamps and return independent copies. This module awaits independent Engineer A review and merge.
