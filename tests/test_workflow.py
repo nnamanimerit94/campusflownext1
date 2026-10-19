@@ -79,9 +79,9 @@ class LifecycleTests(TestCase):
     def test_reopen_matrix_and_history(self):
         assign_ticket(self.store, self.id, "Mentor")
         first = add_note(self.store, self.id, author="Mentor", body="Working")
-        original = deepcopy(self.store[self.id])
         for status in ("resolved", "closed"):
             self._status(status)
+            original = deepcopy(self.store[self.id])
             reopened = reopen_ticket(self.store, self.id)
             self.assertEqual(reopened["status"], "open")
             for field in ("id", "created_at", "priority", "assigned_to", "notes"):
