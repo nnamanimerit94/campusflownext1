@@ -47,3 +47,6 @@ Use `assign_ticket(store, ticket_id, assignee)`, `transition_ticket(store, ticke
 
 ## Current-state reports (Engineer B PR)
 `campusflow.reports.ticket_statistics(store)` returns `total`, `by_status`, `by_priority`, `by_category` and `unassigned` for the current validated ticket store. Every approved enum value appears, including zero-count buckets and critical priority. Reopened tickets count by current status, not past resolution events. Reports never mutate the store. This branch awaits independent Engineer A review/merge; search PR #14 is separate.
+
+## Engineering Understanding Check (PR under review)
+Run `python -c "from campusflow.understanding import run_check; run_check()"` for a local, five-question, one-at-a-time practice session. Each response is followed by deterministic reference guidance; no AI grading or numerical score is claimed. Type `quit` or `exit`, or send EOF, to stop. No ticket data is read or written. Interactive CLI integration is a separate pending gate.
