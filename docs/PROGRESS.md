@@ -43,3 +43,6 @@ Issue #15; feat/engineer-b-reports based on merged lifecycle main (not search PR
 
 ## Engineer B Understanding Check — review pending
 Issue #17; branch feat/engineer-b-understanding. Adds deterministic five-question practice check with reference guidance, early exit/EOF handling and eight test methods. No AI scoring or ticket data access. Requires updated-head Python 3.11/3.14 CI, independent Engineer A approval and merge. Interactive CLI and historical documentation consolidation remain separate.
+
+## Engineer B interactive CLI — independent review pending
+Issue #19; branch feat/engineer-b-cli. Adds main.py and campusflow/cli.py with menu-driven ticket operations, search, statistics, reload, Understanding Check, save-before-publish mutation staging and safe corrupt-file startup. Eight synthetic integration tests cover durable create/reload, lifecycle and notes, invalid inputs, storage failure, EOF, search and Understanding Check. Requires current-head Python 3.11/3.14 CI and Engineer A formal approval/merge. Historical status consolidation and final audit verification remain separate.
