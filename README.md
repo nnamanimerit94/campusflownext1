@@ -44,3 +44,6 @@ Use `assign_ticket(store, ticket_id, assignee)`, `transition_ticket(store, ticke
 
 ## Search and combined filters (Engineer B PR)
 `campusflow.search.search_tickets(store, *, query='', status=None, priority=None, category=None, assigned_to=None)` performs stripped casefold substring search across ticket ID, student ID/name, title, description and note bodies. Optional enum and assignee filters combine with AND; assignee comparison is case-insensitive exact match. Results are deep-copy snapshots ordered by UTC creation time then ID. Invalid filters or stores raise ValidationError without mutation. Search is awaiting independent Engineer A review and merge; reports/CLI are not part of this PR.
+
+## Current-state reports (Engineer B PR)
+`campusflow.reports.ticket_statistics(store)` returns `total`, `by_status`, `by_priority`, `by_category` and `unassigned` for the current validated ticket store. Every approved enum value appears, including zero-count buckets and critical priority. Reopened tickets count by current status, not past resolution events. Reports never mutate the store. This branch awaits independent Engineer A review/merge; search PR #14 is separate.
