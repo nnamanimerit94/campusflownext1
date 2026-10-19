@@ -1,6 +1,6 @@
 # CampusFlow Next engineering plan
 
-Status: APPROVED in PR #2 (eeyung1 review 5577732703), merged as 064d5e0029cc56ac45c78fed3c8892ae033e9543. Foundation PR #4 is merged at e5534908586fac2a5f00ed94b9516a96b597d6cb. Ticket core PR #6 is merged at a71bba985d648d9a27207d8b25e42c164c352e10. Structured notes issue #7 is implemented on its feature branch, awaiting review/CI/merge.
+Status: APPROVED in PR #2 (eeyung1 review 5577732703), merged as 064d5e0029cc56ac45c78fed3c8892ae033e9543. Foundation PR #4 is merged at e5534908586fac2a5f00ed94b9516a96b597d6cb. Ticket core PR #6 is merged at a71bba985d648d9a27207d8b25e42c164c352e10. Notes PR #8 is merged at 976c47a219b9749aaf6b0ea3d7533a56e9814240. Persistence issue #9 is implemented on its feature branch, awaiting independent review/CI/merge.
 
 ## Objective and boundaries
 A local Python campus helpdesk CLI for recording, following up and reporting student support tickets. Proposed MVP: one operator/process at a time, Python 3.11+, standard library only, JSON storage. No web UI, AI service, authentication, concurrent writers, bank integration or actual payment processing. Use synthetic student data in this public repository.
@@ -122,6 +122,6 @@ After scope is complete, practice audit questions one at a time with human Engin
 2026-10-19: B requested changes in review 5577653103. A revised impact-based priority, closed-ticket note policy, full lifecycle matrix, explicit Next schema/UUID compatibility and reviewer identities. Ownership is mutually accepted; revised product contracts await B's fresh formal approval and merge of PR #2. No feature implementation or tests/CI exist yet. This documentation-only planning PR has no executable CI prerequisite; record CI as unavailable, not passed. Subsequent implementation PRs require their applicable CI checks.
 
 ## Current delivery progress
-Planning PR #2, foundation PR #4 and ticket-core PR #6 are merged. Ticket-core approval: eeyung1 review 5577885442; merge a71bba985d648d9a27207d8b25e42c164c352e10; Python 3.11/3.14 CI passed.
-Notes issue #7 adds notes.add_note and 12 test methods on feat/engineer-a-notes. All 33 tests pass locally on Python 3.12.14. Independent review, current-head CI and merge remain pending. Persistence is excluded and follows after notes merge. See docs/PROGRESS.md.
+Planning #2, foundation #4, ticket core #6 and notes #8 are merged. Notes approval: eeyung1 review 5577949428; merge 976c47a219b9749aaf6b0ea3d7533a56e9814240; Python 3.11/3.14 CI passed.
+Persistence issue #9 adds strict storage.load_tickets/save_tickets and 15 test methods on feat/engineer-a-storage. All 48 tests pass locally on Python 3.12.14. Independent review, current-head CI and merge remain pending. No B-owned modules included. See docs/PROGRESS.md.
 
