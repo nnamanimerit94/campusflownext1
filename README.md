@@ -41,3 +41,6 @@ Save validates the entire store, writes a sibling temporary file, flushes/fsyncs
 
 ## Ticket assignment and lifecycle (Engineer B PR)
 Use `assign_ticket(store, ticket_id, assignee)`, `transition_ticket(store, ticket_id, new_status)` and `reopen_ticket(store, ticket_id)` from `campusflow.workflow`. Assign or reassign only active tickets; transition open→in_progress (requires assignee), in_progress→resolved, resolved→closed. Reopen resolved/closed through the explicit API. Invalid transitions leave the store untouched. Successful operations preserve history, use nondecreasing UTC timestamps and return independent copies. This module awaits independent Engineer A review and merge.
+
+## Current-state reports (Engineer B PR)
+`campusflow.reports.ticket_statistics(store)` returns `total`, `by_status`, `by_priority`, `by_category` and `unassigned` for the current validated ticket store. Every approved enum value appears, including zero-count buckets and critical priority. Reopened tickets count by current status, not past resolution events. Reports never mutate the store. This branch awaits independent Engineer A review/merge; search PR #14 is separate.
