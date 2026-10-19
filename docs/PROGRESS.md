@@ -40,3 +40,6 @@ Issue #13; branch feat/engineer-b-search, based on merged lifecycle main. Adds c
 
 ## Engineer B reports — independent review pending
 Issue #15; feat/engineer-b-reports based on merged lifecycle main (not search PR #14). Adds current-state report with all status/priority/category buckets, unassigned count, validation and 9 test methods including empty/mixed fixtures, critical impact, reopen, isolation and corrupt data. Requires Python 3.11/3.14 current-head CI and Engineer A formal approval/merge.
+
+## Engineer B Understanding Check — review pending
+Issue #17; branch feat/engineer-b-understanding. Adds deterministic five-question practice check with reference guidance, early exit/EOF handling and eight test methods. No AI scoring or ticket data access. Requires updated-head Python 3.11/3.14 CI, independent Engineer A approval and merge. Interactive CLI and historical documentation consolidation remain separate.
