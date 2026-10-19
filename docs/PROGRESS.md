@@ -31,3 +31,6 @@ Local Python 3.12.14: python scripts/run_tests.py passes all 48 tests (33 existi
 ## Pending
 Persistence requires current-head CI and eeyung1's independent review/approval/merge. B owns lifecycle/search/reports/Understanding Check/CLI/integration. Final verification and audit preparation follow those gates. Storage is single-writer; no locks or guaranteed hardware/power-loss recovery.
 
+
+## Engineer B lifecycle — branch under review
+Issue #11, branch feat/engineer-b-lifecycle. Adds workflow assignment, forward transitions and explicit reopen plus complete status-matrix, invalid-input, data-integrity, snapshot-isolation and backward-clock tests. Requires current-head Python 3.11/3.14 CI and Engineer A (`nnamanimerit94`) independent approval and merge. Search/reports/CLI remain pending.
