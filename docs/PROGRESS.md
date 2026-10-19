@@ -35,5 +35,8 @@ Persistence requires current-head CI and eeyung1's independent review/approval/m
 ## Engineer B lifecycle — branch under review
 Issue #11, branch feat/engineer-b-lifecycle. Adds workflow assignment, forward transitions and explicit reopen plus complete status-matrix, invalid-input, data-integrity, snapshot-isolation and backward-clock tests. Requires current-head Python 3.11/3.14 CI and Engineer A (`nnamanimerit94`) independent approval and merge. Search/reports/CLI remain pending.
 
+## Engineer B search — awaiting independent review
+Issue #13; branch feat/engineer-b-search, based on merged lifecycle main. Adds casefold text search, AND filters, deterministic ordering and independent result snapshots, plus 12 test methods. Python 3.11/3.14 current-head CI and Engineer A (`nnamanimerit94`) formal approval/merge required. Reports and CLI remain separate.
+
 ## Engineer B reports — independent review pending
 Issue #15; feat/engineer-b-reports based on merged lifecycle main (not search PR #14). Adds current-state report with all status/priority/category buckets, unassigned count, validation and 9 test methods including empty/mixed fixtures, critical impact, reopen, isolation and corrupt data. Requires Python 3.11/3.14 current-head CI and Engineer A formal approval/merge.
