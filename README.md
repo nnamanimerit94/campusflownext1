@@ -2,7 +2,11 @@
 
 A Python campus helpdesk CLI in development. Python 3.11+; standard library only.
 
-The engineering plan was approved and merged in PR #2. This foundation branch adds the package, test runner and CI; review/merge is pending. Ticket creation, lifecycle, notes, persistence, search, reports, CLI and Understanding Check remain unimplemented.
+Planning PR #2 and foundation PR #4 are merged. This ticket-core branch adds validated in-memory creation, impact-based priority, canonical UUID4 lookup and ticket/store schema validation; review/merge is pending. Lifecycle, note operations, persistence, search, reports, CLI and Understanding Check remain unimplemented.
+
+Ticket APIs: `campusflow.tickets.create_ticket`, `calculate_priority` and `get_ticket`. Creation takes an ID-keyed store and required student_id, student_name, title, description, category, urgency and affected_users keyword arguments. Counts 1–9 retain urgency; >=10 escalates one tier (high becomes critical). Free text is stripped; enums are exact lowercase. New tickets are open/unassigned with empty notes and equal UTC timestamps. UUID allocation permits an initial candidate plus ten collision retries.
+
+`campusflow.models.validate_ticket` and `validate_store` enforce the complete schema, including nested Note records, and return deep copies. Stored text must already be stripped; validate_store accepts an ID-keyed dictionary, not a storage envelope. Lookup raises ValidationError for malformed IDs and TicketNotFoundError for absent valid IDs. Whole-store validation prioritizes integrity over large-store lookup speed. Rejected operations preserve the store; returned objects do not alias it. No filesystem I/O or note-creation operation is implemented.
 
 ## Run the tests
 From the repository root (no dependency installation required):
