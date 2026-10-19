@@ -18,10 +18,16 @@ Local Python 3.12.14: python scripts/run_tests.py passes all 21 tests (5 foundat
 
 Ticket-core approval: eeyung1 review 5577885442; merged at a71bba985d648d9a27207d8b25e42c164c352e10. Python 3.11/3.14 CI passed in run 39325806280. The preceding local-test record describes verification before merge.
 
-## Notes — feature branch; review/CI/merge pending
+## Notes — merged through PR #8
 Issue #7; Engineer A; feat/engineer-a-notes, based on main a71bba9. Implements add_note only, with input normalization, active-state rules, canonical UUID4 collision retries, nondecreasing UTC times, staging before publication and independent returns. No persistence or lifecycle operations.
 Local Python 3.12.14: python scripts/run_tests.py passes all 33 tests (21 existing + 12 new). Tests cover valid active states, exact author/body limits, invalid types/text/IDs, missing tickets, completed-state rejection, UUID collision recovery/exhaustion, malformed generated IDs, backward clock, corrupt stores, independent returns, old-note preservation and other-ticket preservation. CI evidence will be recorded in the PR conversation; independent B approval and merge remain required.
 
+Notes approval: eeyung1 review 5577949428; merge 976c47a219b9749aaf6b0ea3d7533a56e9814240. Python 3.11/3.14 CI passed in run 39326890512. Earlier notes-test evidence describes verification before merge.
+
+## Persistence — feature branch; review/CI/merge pending
+Issue #9; Engineer A; feat/engineer-a-storage based on main 976c47a. Implements strict versioned load and atomic save only. Filesystem/JSON/schema failures become StorageError with causes; corrupt files are never silently reset. Same-directory temporary writes are flushed/fsynced/closed before replacement. Failure cleanup is attempted and any cleanup error is retained as an exception note.
+Local Python 3.12.14: python scripts/run_tests.py passes all 48 tests (33 existing + 15 storage methods with subtests). Coverage includes Unicode/notes roundtrip, missing/empty stores, invalid JSON/encoding/schema versions, duplicate ticket/object/note IDs, invalid input store, permission errors, missing parents/directory targets, injected creation/partial-write/flush/fsync/replace failures, byte preservation, cleanup and operation ordering. CI evidence will be recorded in the PR conversation. No B-owned modules included.
+
 ## Pending
-After notes merge, A implements persistence in a separate reviewed PR. B owns lifecycle, search, reports, Understanding Check, CLI and integration verification. Audit preparation follows completed implementation and final verification.
+Persistence requires current-head CI and eeyung1's independent review/approval/merge. B owns lifecycle/search/reports/Understanding Check/CLI/integration. Final verification and audit preparation follow those gates. Storage is single-writer; no locks or guaranteed hardware/power-loss recovery.
 

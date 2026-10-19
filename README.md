@@ -2,11 +2,11 @@
 
 A Python campus helpdesk CLI in development. Python 3.11+; standard library only.
 
-Planning PR #2, foundation PR #4 and ticket-core PR #6 are merged. This notes branch adds structured follow-up notes; independent review/merge is pending. Lifecycle, persistence, search, reports, CLI and Understanding Check remain unimplemented.
+Planning PR #2, foundation PR #4, ticket-core PR #6 and notes PR #8 are merged. This persistence branch adds strict JSON loading and atomic saving; independent review/merge is pending. Lifecycle, search, reports, CLI and Understanding Check remain unimplemented.
 
 Ticket APIs: `campusflow.tickets.create_ticket`, `calculate_priority` and `get_ticket`. Creation takes an ID-keyed store and required student_id, student_name, title, description, category, urgency and affected_users keyword arguments. Counts 1–9 retain urgency; >=10 escalates one tier (high becomes critical). Free text is stripped; enums are exact lowercase. New tickets are open/unassigned with empty notes and equal UTC timestamps. UUID allocation permits an initial candidate plus ten collision retries.
 
-`campusflow.models.validate_ticket` and `validate_store` enforce the complete schema, including nested Note records, and return deep copies. Stored text must already be stripped; validate_store accepts an ID-keyed dictionary, not a storage envelope. Lookup raises ValidationError for malformed IDs and TicketNotFoundError for absent valid IDs. Whole-store validation prioritizes integrity over large-store lookup speed. Rejected operations preserve the store; returned objects do not alias it. No filesystem I/O is implemented.
+`campusflow.models.validate_ticket` and `validate_store` enforce the complete schema, including nested Note records, and return deep copies. Stored text must already be stripped; validate_store accepts an ID-keyed dictionary, not a storage envelope. Lookup raises ValidationError for malformed IDs and TicketNotFoundError for absent valid IDs. Whole-store validation prioritizes integrity over large-store lookup speed. Rejected operations preserve the store; returned objects do not alias it. Ticket and note operations remain in memory; storage calls are explicit.
 
 ## Run the tests
 From the repository root (no dependency installation required):
@@ -29,6 +29,12 @@ GitHub Actions runs the guarded command for every pull request and pushes to mai
 See [ENGINEERING_PLAN.md](ENGINEERING_PLAN.md) for approved contracts and ownership, [AGENTS.md](AGENTS.md) for collaboration rules, and [foundation issue #3](https://github.com/nnamanimerit94/campusflownext1/issues/3).
 
 
-## Structured notes (this branch)
-Use `campusflow.notes.add_note(store, ticket_id, author="Mentor", body="Update")`. Author/body are stripped, nonempty, and limited to 120/5000 characters. Only open/in_progress tickets accept notes; resolved/closed tickets must be reopened first. Each note has a canonical UUID4 unique within its ticket (initial candidate plus ten collision retries). Note time and updated_at use max(current UTC, previous updated_at). Existing notes and unrelated ticket fields are preserved; validation failures leave the store unchanged, and the returned Note is a deep copy. There is no JSON persistence yet.
+## Structured notes
+Use `campusflow.notes.add_note(store, ticket_id, author="Mentor", body="Update")`. Author/body are stripped, nonempty, and limited to 120/5000 characters. Only open/in_progress tickets accept notes; resolved/closed tickets must be reopened first. Each note has a canonical UUID4 unique within its ticket (initial candidate plus ten collision retries). Note time and updated_at use max(current UTC, previous updated_at). Existing notes and unrelated ticket fields are preserved; validation failures leave the store unchanged, and the returned Note is a deep copy. Persistence is available through the explicit storage API below on this branch.
+
+
+## JSON persistence (this branch)
+Use `storage.load_tickets(Path("tickets.json"))` and `storage.save_tickets(Path("tickets.json"), store)` from `campusflow.storage`. The parent folder must already exist. The UTF-8 JSON envelope contains exactly schema_version (integer 1) and tickets (list). Missing files return an empty store; empty/corrupt/unsupported/schema-invalid files raise StorageError without altering the file. Duplicate ticket IDs, object keys, note IDs and nonstandard JSON constants are rejected. Errors preserve their original cause.
+
+Save validates the entire store, writes a sibling temporary file, flushes/fsyncs and closes it, then calls os.replace. Failures before replacement preserve the old destination and attempt temporary-file cleanup; cleanup failures are included on the original exception. Replacement may change file permissions to those of the temporary file. No concurrent writers, file locking, parent creation, legacy migration or guaranteed hardware/power-loss recovery. Callers must report failures rather than treating them as an empty database.
 
