@@ -1,6 +1,6 @@
 # CampusFlow Next engineering plan
 
-Status: APPROVED in PR #2 (eeyung1 review 5577732703), merged as 064d5e0029cc56ac45c78fed3c8892ae033e9543. Application capabilities remain pending; foundation implementation is under review in the issue #3 branch.
+Status: APPROVED in PR #2 (eeyung1 review 5577732703), merged as 064d5e0029cc56ac45c78fed3c8892ae033e9543. Foundation PR #4 is merged at e5534908586fac2a5f00ed94b9516a96b597d6cb. Ticket core issue #5 is implemented on its feature branch pending independent review/CI/merge.
 
 ## Objective and boundaries
 A local Python campus helpdesk CLI for recording, following up and reporting student support tickets. Proposed MVP: one operator/process at a time, Python 3.11+, standard library only, JSON storage. No web UI, AI service, authentication, concurrent writers, bank integration or actual payment processing. Use synthetic student data in this public repository.
@@ -122,5 +122,5 @@ After scope is complete, practice audit questions one at a time with human Engin
 2026-10-19: B requested changes in review 5577653103. A revised impact-based priority, closed-ticket note policy, full lifecycle matrix, explicit Next schema/UUID compatibility and reviewer identities. Ownership is mutually accepted; revised product contracts await B's fresh formal approval and merge of PR #2. No feature implementation or tests/CI exist yet. This documentation-only planning PR has no executable CI prerequisite; record CI as unavailable, not passed. Subsequent implementation PRs require their applicable CI checks.
 
 ## Current delivery progress
-Planning gate complete: PR #2 approved by eeyung1 in review 5577732703 and merged. Foundation issue #3: package, guarded unittest runner, five foundation tests and Python 3.11/3.14 PR/main CI implemented on its feature branch; local Python 3.12.14 tests pass. CI/review/merge pending; foundation is not yet delivered on main. See docs/PROGRESS.md. All domain features remain pending.
+Planning PR #2 and foundation PR #4 are merged. Foundation approval: eeyung1 review 5577794350; Python 3.11/3.14 CI passed. Ticket core issue #5 adds models.py/tickets.py and 16 new test methods; all 21 tests pass locally on Python 3.12.14. Current-head CI, independent review and merge pending. Shared Note shape validation is part of the complete Ticket schema; notes operations and persistence are excluded. See docs/PROGRESS.md.
 
